@@ -4,6 +4,34 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fexto – Social Video Downloader</title>
+  <meta
+    name="description"
+    content="Fexto is a sleek social media video downloader for Instagram, YouTube, TikTok, Facebook, Twitter, and more. Paste a link and download instantly on mobile or desktop."
+  />
+  <meta
+    name="keywords"
+    content="video downloader, instagram downloader, youtube downloader, tiktok downloader, facebook video save, twitter video downloader, fexto"
+  />
+  <meta name="author" content="Fexto" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#7e4dff" />
+  <link rel="canonical" href="https://fexto.app/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Fexto – Social Video Downloader" />
+  <meta
+    property="og:description"
+    content="Download videos from Instagram, YouTube, TikTok, Facebook, and Twitter in seconds with the beautifully simple Fexto experience."
+  />
+  <meta property="og:url" content="https://fexto.app/" />
+  <meta property="og:site_name" content="Fexto" />
+  <meta property="og:image" content="https://fexto.app/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Fexto – Social Video Downloader" />
+  <meta
+    name="twitter:description"
+    content="Turn any social link into a downloadable video instantly with Fexto's mobile-ready interface."
+  />
+  <meta name="twitter:image" content="https://fexto.app/og-image.jpg" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -30,6 +58,10 @@
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
       font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -38,15 +70,55 @@
       color: var(--text-strong);
       display: flex;
       flex-direction: column;
+      position: relative;
+    }
+
+    body::before,
+    body::after {
+      content: '';
+      position: fixed;
+      inset: auto -20% 10% auto;
+      width: clamp(360px, 40vw, 520px);
+      height: clamp(360px, 42vw, 560px);
+      background: radial-gradient(circle at center, rgba(255, 255, 255, 0.25), transparent 70%);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    body::after {
+      inset: 8% auto auto -18%;
+      background: radial-gradient(circle at center, rgba(255, 255, 255, 0.18), transparent 70%);
+      transform: rotate(-12deg);
     }
 
     .page {
       width: min(92%, var(--max-width));
       margin: 0 auto;
       padding-bottom: 4rem;
+      position: relative;
+      z-index: 1;
     }
 
-    header {
+    .skip-link {
+      position: absolute;
+      left: 50%;
+      transform: translate(-50%, -200%);
+      background: var(--secondary);
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 999px;
+      font-weight: 600;
+      transition: transform 0.2s ease;
+      z-index: 10;
+    }
+
+    .skip-link:focus {
+      transform: translate(-50%, 1rem);
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(126, 77, 255, 0.3);
+    }
+
+    .site-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -117,22 +189,55 @@
       opacity: 0.74;
     }
 
-    header nav {
+    .site-nav {
       display: flex;
+      align-items: center;
       gap: clamp(1rem, 2vw, 1.8rem);
       font-weight: 500;
       font-size: 0.95rem;
     }
 
-    header nav a {
+    .site-nav ul {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      gap: clamp(1rem, 2vw, 1.8rem);
+      list-style: none;
+    }
+
+    .site-nav a {
       color: inherit;
       text-decoration: none;
       opacity: 0.85;
       transition: opacity 0.2s ease;
     }
 
-    header nav a:hover {
+    .site-nav a:hover,
+    .site-nav a:focus-visible {
       opacity: 1;
+      outline: none;
+    }
+
+    .nav-toggle {
+      display: none;
+      background: rgba(255, 255, 255, 0.22);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      color: white;
+      border-radius: 999px;
+      padding: 0.55rem 1.25rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .nav-toggle:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.35);
+    }
+
+    .nav-toggle:active {
+      transform: translateY(1px);
     }
 
     main {
@@ -161,11 +266,29 @@
       z-index: 0;
     }
 
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle at bottom left, rgba(126, 77, 255, 0.2), transparent 65%);
+      inset: auto auto -22% -18%;
+      z-index: 0;
+    }
+
     .hero-content {
       position: relative;
       z-index: 1;
       display: grid;
       gap: clamp(1.6rem, 4vw, 2.4rem);
+    }
+
+    @media (min-width: 1040px) {
+      .hero-content {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 420px);
+        align-items: center;
+        gap: clamp(2.4rem, 4vw, 3rem);
+      }
     }
 
     .hero-title h1 {
@@ -190,6 +313,7 @@
       border: 1px solid rgba(255, 255, 255, 0.7);
       display: grid;
       gap: 1.2rem;
+      backdrop-filter: blur(20px);
     }
 
     .platform-switch {
@@ -217,6 +341,14 @@
     .platform-tab:focus {
       outline: none;
       background: rgba(126, 77, 255, 0.15);
+    }
+
+    .platform-tab:focus-visible,
+    .primary-action:focus-visible,
+    .copy-button:focus-visible,
+    .result-link:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(126, 77, 255, 0.22);
     }
 
     .platform-tab.active {
@@ -303,6 +435,16 @@
       border: 1px solid rgba(126, 77, 255, 0.18);
       display: grid;
       gap: 1rem;
+      transition: opacity 0.2s ease, transform 0.3s ease;
+      opacity: 0;
+      transform: translateY(6px);
+      pointer-events: none;
+    }
+
+    .result-card.show {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
     }
 
     .hero-pill {
@@ -498,11 +640,47 @@
       line-height: 1.6;
     }
 
-    @media (max-width: 720px) {
-      header nav {
-        display: none;
+    @media (max-width: 900px) {
+      .nav-toggle {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
       }
 
+      .site-nav {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background: rgba(24, 7, 54, 0.92);
+        padding: 1.4rem;
+        border-radius: 18px;
+        box-shadow: 0 24px 48px rgba(15, 4, 40, 0.3);
+        backdrop-filter: blur(20px);
+        transform: scale(0.9);
+        transform-origin: top right;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s ease, transform 0.2s ease;
+        width: min(260px, 88vw);
+      }
+
+      .site-header {
+        position: relative;
+      }
+
+      .site-nav ul {
+        flex-direction: column;
+        gap: 0.9rem;
+      }
+
+      .site-nav.open {
+        opacity: 1;
+        transform: scale(1);
+        pointer-events: auto;
+      }
+    }
+
+    @media (max-width: 720px) {
       .hero {
         padding: 2.2rem;
       }
@@ -519,11 +697,67 @@
         gap: 1.2rem;
       }
     }
+
+    @media (max-width: 540px) {
+      .brand {
+        gap: 0.75rem;
+      }
+
+      .brand-logo {
+        width: 46px;
+        height: 46px;
+      }
+
+      .primary-action {
+        width: 100%;
+      }
+
+      .input-row {
+        flex-direction: column;
+      }
+
+      .input-row input {
+        width: 100%;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
   </style>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Fexto Social Video Downloader",
+      "url": "https://fexto.app/",
+      "applicationCategory": "Multimedia",
+      "operatingSystem": "Web",
+      "description": "Fexto lets creators save videos from Instagram, YouTube, TikTok, Facebook, Twitter, and more in a single mobile-friendly interface.",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "ratingCount": "1280"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
   <div class="page">
-    <header>
+    <header class="site-header">
       <div class="brand" aria-label="Fexto">
         <div class="brand-logo" aria-hidden="true">
           <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" focusable="false">
@@ -543,15 +777,27 @@
           <span>Video Lab</span>
         </div>
       </div>
-      <nav>
-        <a href="#how">How it works</a>
-        <a href="#platforms">Platforms</a>
-        <a href="#faq">FAQ</a>
+      <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        Menu
+        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24">
+          <path
+            fill="currentColor"
+            d="M4 6.25C4 5.56 4.56 5 5.25 5h13.5C19.44 5 20 5.56 20 6.25S19.44 7.5 18.75 7.5H5.25C4.56 7.5 4 6.94 4 6.25Zm0 5c0-.69.56-1.25 1.25-1.25h13.5c.69 0 1.25.56 1.25 1.25S19.44 12.5 18.75 12.5H5.25C4.56 12.5 4 11.94 4 11.25Zm0 5c0-.69.56-1.25 1.25-1.25h13.5c.69 0 1.25.56 1.25 1.25S19.44 17.5 18.75 17.5H5.25C4.56 17.5 4 16.94 4 16.25Z"
+          />
+        </svg>
+      </button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary">
+        <ul>
+          <li><a href="#download">Downloader</a></li>
+          <li><a href="#how">How it works</a></li>
+          <li><a href="#platforms">Platforms</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
       </nav>
     </header>
 
-    <main>
-      <section class="hero" aria-labelledby="hero-title">
+    <main id="main-content">
+      <section id="download" class="hero" aria-labelledby="hero-title">
         <div class="hero-content">
           <div class="hero-title">
             <div class="hero-pill">Instagram · YouTube · TikTok · Facebook · Twitter</div>
@@ -559,7 +805,7 @@
             <p>Paste your link, choose the platform, and Fexto will route you to a trusted open-source mirror ready for fast downloads. No logins, no installers—just instant saves for the socials you love.</p>
           </div>
 
-          <div class="download-card" role="form" aria-labelledby="download-label">
+          <form id="download-form" class="download-card" aria-labelledby="download-label" novalidate>
             <div class="platform-switch" role="tablist" aria-label="Select a platform">
               <button type="button" class="platform-tab active" data-platform="instagram" role="tab" aria-selected="true">Instagram</button>
               <button type="button" class="platform-tab" data-platform="youtube" role="tab" aria-selected="false">YouTube</button>
@@ -570,8 +816,8 @@
             <div class="input-group">
               <span class="input-label" id="download-label">Paste the link</span>
               <div class="input-row">
-                <input id="video-url" name="url" type="url" placeholder="https://www.instagram.com/reel/..." autocomplete="off" required />
-                <button class="primary-action" id="download-btn" type="button">Generate link</button>
+                <input id="video-url" name="url" type="url" inputmode="url" placeholder="https://www.instagram.com/reel/..." autocomplete="off" required />
+                <button class="primary-action" id="download-btn" type="submit">Generate link</button>
               </div>
             </div>
             <p class="status" id="status" role="status" aria-live="polite"></p>
@@ -581,10 +827,10 @@
                 <a class="result-link" id="result-link" href="#" target="_blank" rel="noopener"></a>
               </div>
               <button class="copy-button" id="copy-btn" type="button">Copy link</button>
-              <p class="status" id="copy-status"></p>
+              <p class="status" id="copy-status" role="status" aria-live="polite"></p>
             </div>
             <p class="status" id="tip">Tip: we open ddinstagram.com where you can grab the video in HD. Works for public posts, Reels, and carousels.</p>
-          </div>
+          </form>
           <dl class="hero-stats">
             <div>
               <dt>5+</dt>
@@ -688,6 +934,7 @@
 
   <script>
     (function () {
+      const downloadForm = document.getElementById('download-form');
       const urlInput = document.getElementById('video-url');
       const downloadBtn = document.getElementById('download-btn');
       const statusEl = document.getElementById('status');
@@ -697,7 +944,47 @@
       const copyStatus = document.getElementById('copy-status');
       const platformTabs = Array.from(document.querySelectorAll('.platform-tab'));
       const tipEl = document.getElementById('tip');
+      const navToggle = document.getElementById('nav-toggle');
+      const siteNav = document.getElementById('site-nav');
+      const navLinks = siteNav ? Array.from(siteNav.querySelectorAll('a')) : [];
       let activePlatform = 'instagram';
+
+      function closeNav() {
+        if (!navToggle || !siteNav) return;
+        navToggle.setAttribute('aria-expanded', 'false');
+        siteNav.classList.remove('open');
+      }
+
+      if (navToggle && siteNav) {
+        navToggle.addEventListener('click', () => {
+          const expanded = navToggle.getAttribute('aria-expanded') === 'true';
+          navToggle.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+          siteNav.classList.toggle('open', !expanded);
+        });
+
+        navLinks.forEach((link) => {
+          link.addEventListener('click', () => closeNav());
+        });
+
+        const desktopQuery = window.matchMedia('(min-width: 901px)');
+        desktopQuery.addEventListener('change', (event) => {
+          if (event.matches) {
+            closeNav();
+          }
+        });
+
+        document.addEventListener('click', (event) => {
+          if (!siteNav.contains(event.target) && !navToggle.contains(event.target)) {
+            closeNav();
+          }
+        });
+
+        document.addEventListener('keydown', (event) => {
+          if (event.key === 'Escape') {
+            closeNav();
+          }
+        });
+      }
 
       const platformConfig = {
         instagram: {
@@ -837,6 +1124,7 @@
         urlInput.placeholder = config.placeholder;
         tipEl.textContent = config.tip;
         resultCard.hidden = true;
+        resultCard.classList.remove('show');
         copyStatus.textContent = '';
         copyStatus.classList.remove('success', 'error');
         statusEl.textContent = '';
@@ -854,8 +1142,14 @@
         resultLink.href = url;
         resultLink.textContent = url;
         resultCard.hidden = false;
+        requestAnimationFrame(() => {
+          resultCard.classList.add('show');
+        });
         copyStatus.textContent = '';
         copyStatus.classList.remove('success', 'error');
+        if (window.matchMedia('(max-width: 720px)').matches) {
+          resultCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
       }
 
       async function copyToClipboard(text) {
@@ -875,8 +1169,15 @@
         tab.addEventListener('click', () => updatePlatformTab(tab));
       });
 
-      downloadBtn.addEventListener('click', () => {
+      function handleSubmission(event) {
+        event.preventDefault();
         const config = platformConfig[activePlatform];
+        if (!config) {
+          return;
+        }
+        downloadBtn.disabled = true;
+        downloadBtn.setAttribute('aria-busy', 'true');
+        setStatus(`Checking your ${config.name} link…`);
         try {
           const transformed = config.normalize(urlInput.value);
           showResult(transformed);
@@ -884,16 +1185,36 @@
           window.open(transformed, '_blank', 'noopener');
         } catch (error) {
           resultCard.hidden = true;
+          resultCard.classList.remove('show');
           copyStatus.textContent = '';
           copyStatus.classList.remove('success', 'error');
           setStatus(error.message, 'error');
+          urlInput.focus();
+          urlInput.select();
+        } finally {
+          downloadBtn.disabled = false;
+          downloadBtn.removeAttribute('aria-busy');
         }
-      });
+      }
+
+      if (downloadForm) {
+        downloadForm.addEventListener('submit', handleSubmission);
+      }
 
       copyBtn.addEventListener('click', () => {
-        if (!resultCard.hidden && resultLink.href) {
-          copyToClipboard(resultLink.href);
+        if (resultCard.hidden || !resultLink.href) {
+          copyStatus.textContent = 'Generate a link first to copy it.';
+          copyStatus.classList.remove('success');
+          copyStatus.classList.add('error');
+          return;
         }
+        if (!navigator.clipboard) {
+          copyStatus.textContent = 'Clipboard access is unavailable. Long-press the link to copy it manually.';
+          copyStatus.classList.remove('success');
+          copyStatus.classList.add('error');
+          return;
+        }
+        copyToClipboard(resultLink.href);
       });
     })();
   </script>

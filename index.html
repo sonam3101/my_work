@@ -1,1 +1,688 @@
-hi ok tata bye-bye
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VidSave – Download Videos from Anywhere</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #ff5ab7;
+      --primary-dark: #e647a0;
+      --secondary: #7e4dff;
+      --light: #ffffff;
+      --card-bg: rgba(255, 255, 255, 0.92);
+      --card-border: rgba(255, 255, 255, 0.45);
+      --text-primary: #34204f;
+      --text-muted: #6f5c85;
+      --shadow: 0 18px 40px rgba(69, 0, 123, 0.18);
+      --radius-lg: 28px;
+      --radius-md: 20px;
+      --radius-sm: 14px;
+      --max-width: 1080px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(180deg, #7e4dff 0%, #ff5ab7 50%, #ff8a65 100%);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .page-wrap {
+      width: min(92%, var(--max-width));
+      margin: 0 auto;
+      padding-bottom: 4rem;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2rem 0 1rem;
+      color: var(--light);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-weight: 700;
+      font-size: 1.4rem;
+      letter-spacing: 0.4px;
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.22);
+      display: grid;
+      place-items: center;
+      font-size: 1.4rem;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12) inset;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      font-weight: 500;
+    }
+
+    nav a {
+      color: var(--light);
+      text-decoration: none;
+      opacity: 0.85;
+      transition: opacity 0.2s ease;
+    }
+
+    nav a:hover {
+      opacity: 1;
+    }
+
+    .cta-btn {
+      background: var(--light);
+      color: var(--primary);
+      padding: 0.65rem 1.4rem;
+      border-radius: 999px;
+      font-weight: 600;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    }
+
+    main {
+      display: flex;
+      flex-direction: column;
+      gap: 2.75rem;
+      margin-top: 0.5rem;
+    }
+
+    .hero {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      padding: 3.25rem clamp(1.75rem, 5vw, 3.8rem);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--card-border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: -30% -10% auto auto;
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle at top, rgba(255, 91, 183, 0.45), transparent 65%);
+      z-index: 0;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 2.2rem;
+    }
+
+    .hero-header h1 {
+      font-size: clamp(2.1rem, 4.2vw, 3rem);
+      margin: 0 0 0.75rem;
+      color: #2e1a44;
+    }
+
+    .hero-header p {
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      line-height: 1.6;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .stat-card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: var(--radius-md);
+      padding: 1.1rem 1.3rem;
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      box-shadow: 0 16px 26px rgba(84, 28, 146, 0.1);
+      display: grid;
+      gap: 0.3rem;
+      align-content: start;
+    }
+
+    .stat-card span {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #9a7ebb;
+      font-weight: 600;
+    }
+
+    .stat-card strong {
+      font-size: 1.5rem;
+      color: var(--text-primary);
+    }
+
+    .download-card {
+      background: var(--light);
+      padding: 1.8rem;
+      border-radius: var(--radius-md);
+      display: grid;
+      gap: 1.2rem;
+      border: 1px solid rgba(141, 90, 198, 0.2);
+      box-shadow: 0 20px 36px rgba(51, 12, 103, 0.14);
+    }
+
+    .source-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 0.65rem;
+      padding: 0.65rem;
+      background: rgba(243, 232, 255, 0.65);
+      border-radius: 999px;
+      border: 1px solid rgba(163, 118, 219, 0.3);
+    }
+
+    .source-tab {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      padding: 0.6rem 0.8rem;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 999px;
+      border: none;
+      box-shadow: 0 8px 18px rgba(102, 36, 168, 0.08);
+      transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+      cursor: pointer;
+    }
+
+    .source-tab:not(.active):hover,
+    .source-tab:not(.active):focus-visible {
+      background: rgba(255, 255, 255, 1);
+      color: #503177;
+      box-shadow: 0 12px 22px rgba(100, 32, 166, 0.15);
+    }
+
+    .source-tab:focus-visible {
+      outline: 3px solid rgba(126, 77, 255, 0.45);
+      outline-offset: 2px;
+    }
+
+    .source-tab svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .source-tab.active {
+      background: linear-gradient(135deg, var(--secondary), var(--primary));
+      color: var(--light);
+      box-shadow: 0 14px 26px rgba(255, 91, 183, 0.28);
+    }
+
+    .source-tab.active svg {
+      filter: brightness(0) invert(1);
+    }
+
+    .download-card label {
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--text-primary);
+    }
+
+    .input-row {
+      display: grid;
+      gap: 0.75rem;
+      grid-template-columns: 1fr auto;
+    }
+
+    .input-row input {
+      border-radius: 999px;
+      border: 1px solid rgba(150, 100, 210, 0.35);
+      padding: 0.85rem 1.4rem;
+      font-size: 1rem;
+      font-family: inherit;
+      outline: none;
+      transition: border 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .input-row input:focus {
+      border-color: var(--secondary);
+      box-shadow: 0 0 0 4px rgba(126, 77, 255, 0.15);
+    }
+
+    .input-row button {
+      border: none;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--secondary), var(--primary));
+      color: var(--light);
+      font-weight: 600;
+      padding: 0.85rem 1.75rem;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 18px 32px rgba(255, 89, 183, 0.25);
+    }
+
+    .input-row button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 24px 38px rgba(255, 89, 183, 0.32);
+    }
+
+    .note {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    section {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      padding: 2.6rem clamp(1.6rem, 5vw, 3.5rem);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--card-border);
+    }
+
+    section h2 {
+      text-align: center;
+      margin: 0;
+      font-size: clamp(1.8rem, 3.4vw, 2.4rem);
+    }
+
+    section > p {
+      text-align: center;
+      color: var(--text-muted);
+      max-width: 720px;
+      margin: 0.75rem auto 2.5rem;
+      line-height: 1.6;
+    }
+
+    .how-steps {
+      display: grid;
+      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    }
+
+    .how-step {
+      background: rgba(255, 255, 255, 0.96);
+      border-radius: var(--radius-md);
+      padding: 1.75rem 1.4rem;
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      display: grid;
+      gap: 0.9rem;
+      text-align: center;
+      box-shadow: 0 18px 28px rgba(71, 16, 125, 0.1);
+    }
+
+    .step-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 18px;
+      margin: 0 auto;
+      background: linear-gradient(135deg, rgba(126, 77, 255, 0.18), rgba(255, 90, 183, 0.22));
+      display: grid;
+      place-items: center;
+      font-size: 1.8rem;
+      color: var(--secondary);
+    }
+
+    .how-step h3 {
+      margin: 0;
+      font-size: 1.15rem;
+    }
+
+    .how-step p {
+      margin: 0;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .platform-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1.2rem;
+      align-items: stretch;
+    }
+
+    .platform-card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: var(--radius-md);
+      padding: 1.4rem 1.1rem;
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      text-align: center;
+      display: grid;
+      gap: 0.75rem;
+      justify-items: center;
+      box-shadow: 0 12px 22px rgba(79, 13, 140, 0.12);
+    }
+
+    .platform-card svg {
+      width: 36px;
+      height: 36px;
+    }
+
+    .faq {
+      display: grid;
+      gap: 1rem;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    details {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: var(--radius-sm);
+      padding: 1.2rem 1.5rem;
+      border: 1px solid rgba(129, 82, 191, 0.25);
+      box-shadow: 0 14px 24px rgba(80, 14, 137, 0.12);
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      color: var(--text-primary);
+    }
+
+    summary::marker {
+      display: none;
+    }
+
+    summary span {
+      font-size: 0.8rem;
+      background: rgba(126, 77, 255, 0.14);
+      color: var(--secondary);
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+    }
+
+    details[open] summary span {
+      background: rgba(255, 91, 183, 0.18);
+      color: var(--primary);
+    }
+
+    details p {
+      margin: 0.9rem 0 0;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    footer {
+      margin-top: auto;
+      padding: 3rem 0 2.5rem;
+      color: var(--light);
+      text-align: center;
+      font-size: 0.92rem;
+    }
+
+    footer a {
+      color: var(--light);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    @media (max-width: 720px) {
+      header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+      }
+
+      nav {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .input-row {
+        grid-template-columns: 1fr;
+      }
+
+      .input-row button {
+        width: 100%;
+      }
+
+      summary {
+        font-size: 0.98rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrap">
+    <header>
+      <div class="brand">
+        <div class="brand-icon">▶</div>
+        VidSave
+      </div>
+      <nav>
+        <a href="#download">Download</a>
+        <a href="#how">How it works</a>
+        <a href="#platforms">Platforms</a>
+        <a href="#faq">FAQ</a>
+        <a class="cta-btn" href="#download">Get Started</a>
+      </nav>
+    </header>
+
+    <main>
+      <section id="download" class="hero">
+        <div class="hero-content">
+          <div class="hero-header">
+            <h1>Download Videos from Anywhere!</h1>
+            <p>Save your favorite clips from Instagram, TikTok, YouTube, Facebook, and 900+ platforms in full HD with blazing speed. Just paste a link and VidSave does the rest.</p>
+          </div>
+
+          <div class="stats-grid">
+            <div class="stat-card">
+              <span>Daily Downloads</span>
+              <strong>250K+</strong>
+              <small>Trusted worldwide</small>
+            </div>
+            <div class="stat-card">
+              <span>Supported Sites</span>
+              <strong>900+</strong>
+              <small>More added monthly</small>
+            </div>
+            <div class="stat-card">
+              <span>Max Quality</span>
+              <strong>4K UHD</strong>
+              <small>Keep every detail</small>
+            </div>
+          </div>
+
+          <div class="download-card">
+            <div class="source-tabs" role="tablist" aria-label="Select platform">
+              <button class="source-tab active" type="button" role="tab" aria-selected="true">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" fill="currentColor" />
+                </svg>
+                All Sites
+              </button>
+              <button class="source-tab" type="button" role="tab" aria-selected="false">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 15.25a4.25 4.25 0 1 0 0-8.5 4.25 4.25 0 0 0 0 8.5zm6-9a1.25 1.25 0 1 0 0-2.5 1.25 1.25 0 0 0 0 2.5z" fill="currentColor" />
+                </svg>
+                Instagram
+              </button>
+              <button class="source-tab" type="button" role="tab" aria-selected="false">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M10 8.64v6.72L15.27 12 10 8.64z" fill="currentColor" />
+                  <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 18.2a8.2 8.2 0 1 1 0-16.4 8.2 8.2 0 0 1 0 16.4z" fill="currentColor" />
+                </svg>
+                YouTube
+              </button>
+              <button class="source-tab" type="button" role="tab" aria-selected="false">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M8.75 2h6.5A4.75 4.75 0 0 1 20 6.75v10.5A4.75 4.75 0 0 1 15.25 22h-6.5A4.75 4.75 0 0 1 4 17.25V6.75A4.75 4.75 0 0 1 8.75 2zm5.9 6.2c-.67.03-1.3-.24-1.92-.68-.52.36-1.23.68-1.93.68-.68 0-1.26-.32-1.7-.76v4.02c0 2.1 1.3 4.09 3.63 4.09 2.32 0 3.6-1.99 3.6-4.08V7.36c-.43.46-1.02.8-1.68.84z" fill="currentColor" />
+                </svg>
+                TikTok
+              </button>
+              <button class="source-tab" type="button" role="tab" aria-selected="false">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M13.75 3.5h3.5V7h-3.5v13h-4.5V7h-3V3.5h3V2.25C9.75 1 10.75 0 12 0h1.75v3.5z" fill="currentColor" />
+                </svg>
+                Facebook
+              </button>
+              <button class="source-tab" type="button" role="tab" aria-selected="false">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M22.46 6c-.77.35-1.6.58-2.46.69a4.27 4.27 0 0 0 1.88-2.37 8.48 8.48 0 0 1-2.7 1.03 4.24 4.24 0 0 0-7.4 2.9c0 .33.04.65.1.95A12 12 0 0 1 3.16 4.9a4.24 4.24 0 0 0 1.31 5.66 4.2 4.2 0 0 1-1.92-.53v.05c0 2.04 1.45 3.75 3.37 4.14-.35.1-.73.16-1.12.16-.27 0-.54-.03-.8-.07a4.26 4.26 0 0 0 3.95 2.94A8.52 8.52 0 0 1 2 19.54 12 12 0 0 0 8.29 21.5c7.55 0 11.68-6.26 11.68-11.68 0-.18-.01-.36-.02-.53A8.34 8.34 0 0 0 22.46 6z" fill="currentColor" />
+                </svg>
+                Twitter
+              </button>
+            </div>
+            <label for="video-url">Paste video link below to get started:</label>
+            <div class="input-row">
+              <input type="url" id="video-url" name="video-url" placeholder="https://example.com/video" />
+              <button type="button">Download Now</button>
+            </div>
+            <p class="note">No account required. 100% secure &amp; free. Supports MP4 and MP3 conversions.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="how">
+        <h2>How to Download Videos?</h2>
+        <p>VidSave keeps things simple so you can save what you love without hassle. Follow three easy steps and get instant downloads on any device.</p>
+        <div class="how-steps">
+          <div class="how-step">
+            <div class="step-icon">🔗</div>
+            <h3>Copy the Link</h3>
+            <p>Open your favorite platform, find the video you want, and copy its shareable URL.</p>
+          </div>
+          <div class="how-step">
+            <div class="step-icon">📥</div>
+            <h3>Paste into VidSave</h3>
+            <p>Paste the link into the VidSave box above. We’ll instantly analyze the source.</p>
+          </div>
+          <div class="how-step">
+            <div class="step-icon">✅</div>
+            <h3>Choose Format &amp; Save</h3>
+            <p>Select the quality or audio format you need and hit download to save it offline.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="platforms">
+        <h2>Supported Platforms</h2>
+        <p>From viral shorts to long-form tutorials, VidSave captures content everywhere you explore. We constantly expand our coverage so you never miss the videos you care about.</p>
+        <div class="platform-grid">
+          <div class="platform-card">
+            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="24" cy="24" r="24" fill="#FF0000"/>
+              <polygon points="20,16 34,24 20,32" fill="#fff"/>
+            </svg>
+            <strong>YouTube</strong>
+            <span>Videos &amp; Shorts</span>
+          </div>
+          <div class="platform-card">
+            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <defs>
+                <linearGradient id="igGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#feda75" />
+                  <stop offset="30%" stop-color="#fa7e1e" />
+                  <stop offset="60%" stop-color="#d62976" />
+                  <stop offset="100%" stop-color="#962fbf" />
+                </linearGradient>
+              </defs>
+              <rect width="48" height="48" rx="12" fill="url(#igGradient)" />
+              <path d="M24 16.5c-4.14 0-7.5 3.36-7.5 7.5s3.36 7.5 7.5 7.5 7.5-3.36 7.5-7.5-3.36-7.5-7.5-7.5zm0 12.3a4.8 4.8 0 1 1 0-9.6 4.8 4.8 0 0 1 0 9.6zm7.8-13.5a1.8 1.8 0 1 1 0-3.6 1.8 1.8 0 0 1 0 3.6z" fill="#fff" />
+            </svg>
+            <strong>Instagram</strong>
+            <span>Reels &amp; Stories</span>
+          </div>
+          <div class="platform-card">
+            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect width="48" height="48" rx="10" fill="#000" />
+              <path d="M18 18h7.2v2.4c1.2-1.7 2.9-2.8 5.4-2.8 3.5 0 5.9 2 5.9 6.3v10.1H29V25.4c0-2-1.1-3.2-2.8-3.2-1.8 0-3 1.3-3 3.6v8.4H18V18z" fill="#fff" />
+            </svg>
+            <strong>Facebook</strong>
+            <span>Feed &amp; Watch</span>
+          </div>
+          <div class="platform-card">
+            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect width="48" height="48" rx="12" fill="#000" />
+              <path d="M33.7 18.6c.1-.5 0-1-.4-1.2-2.2-1.6-5-2.5-8.1-2.5-4.3 0-8.2 1.6-10.8 4.1-.3.3-.2.8.1 1.1l2.9 2.3c.3.2.7.2 1-.1 1.6-1.4 3.7-2.3 6-2.3 1.9 0 3.6.5 4.9 1.4.4.3 1 .1 1.1-.4l.3-2.4zm4.7 4c-.3-.2-.6-.2-.9 0-.9.7-1.7 1.5-2.1 2.7-.8 2.3-2.7 3.9-4.8 4.4-2.1.5-4.5-.1-6.2-1.5-.4-.3-.9-.2-1.2.2l-2 3.1c-.3.4-.2.9.2 1.2 2 1.6 4.5 2.4 7.3 2.4 4.3 0 7.9-1.6 10.3-4.2 1.7-1.8 2.9-4.2 3.2-6.9.1-.4-.2-.9-.6-1.4l-3.2-2.5z" fill="#fff" />
+            </svg>
+            <strong>TikTok</strong>
+            <span>Clips &amp; Lives</span>
+          </div>
+          <div class="platform-card">
+            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect width="48" height="48" rx="12" fill="#0a66c2" />
+              <path d="M17 20.2h4.1v13.7H17V20.2zm2-6.2a2.4 2.4 0 1 1 0 4.8 2.4 2.4 0 0 1 0-4.8zM22.8 20.2h3.9v1.9c.6-1.1 2.1-2.2 4.3-2.2 4.2 0 5 2.5 5 5.8v8.2h-4.1v-7.3c0-1.7-.1-3.9-2.4-3.9-2.4 0-2.7 1.9-2.7 3.7v7.5h-4V20.2z" fill="#fff" />
+            </svg>
+            <strong>LinkedIn</strong>
+            <span>Learning &amp; Ads</span>
+          </div>
+          <div class="platform-card">
+            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect width="48" height="48" rx="12" fill="#1DA1F2" />
+              <path d="M36 17.5a7.7 7.7 0 0 1-2.2.6 3.8 3.8 0 0 0 1.7-2.1 7.6 7.6 0 0 1-2.4.9 3.8 3.8 0 0 0-6.5 3.5 10.8 10.8 0 0 1-7.8-4 3.8 3.8 0 0 0 1.2 5 3.8 3.8 0 0 1-1.7-.5v.1a3.8 3.8 0 0 0 3 3.7 3.8 3.8 0 0 1-1.7.1 3.8 3.8 0 0 0 3.6 2.7 7.7 7.7 0 0 1-5.7 1.6 10.8 10.8 0 0 0 16.6-9.1v-.5A7.7 7.7 0 0 0 36 17.5z" fill="#fff" />
+            </svg>
+            <strong>Twitter/X</strong>
+            <span>Spaces &amp; Media</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="faq">
+        <h2>Frequently Asked Questions</h2>
+        <p>Find answers to the most popular questions about VidSave. Need more help? Reach out to our support team anytime.</p>
+        <div class="faq">
+          <details open>
+            <summary>Is VidSave free to use? <span>Popular</span></summary>
+            <p>Yes! VidSave is completely free and doesn’t require registration. Paste a link, choose your format, and download without restrictions.</p>
+          </details>
+          <details>
+            <summary>Can I download content in 4K? <span>New</span></summary>
+            <p>When the source provides high-resolution streams, VidSave lets you grab the original 4K UHD file so you never lose quality.</p>
+          </details>
+          <details>
+            <summary>Does VidSave work on mobile? <span>Mobile</span></summary>
+            <p>Absolutely. Our site is fully responsive, so you can save videos directly to your iOS or Android device with just a tap.</p>
+          </details>
+          <details>
+            <summary>Can I convert videos to MP3? <span>Audio</span></summary>
+            <p>Yes! Select the MP3 option in the download dialog to extract pure audio from any supported video link.</p>
+          </details>
+          <details>
+            <summary>Why should I trust VidSave? <span>Secure</span></summary>
+            <p>VidSave never stores your downloads or personal data. We use secure connections and regularly update our platform to keep you safe.</p>
+          </details>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    <div class="page-wrap">
+      <strong>VidSave</strong> – Your free video downloader for every platform.<br />
+      Built for creators &amp; fans. <a href="#download">Start downloading</a> now.
+    </div>
+  </footer>
+</body>
+</html>

@@ -59,21 +59,62 @@
     .brand {
       display: flex;
       align-items: center;
-      gap: 0.8rem;
+      gap: 1rem;
       font-weight: 700;
       font-size: clamp(1.3rem, 2.8vw, 1.6rem);
       letter-spacing: 0.6px;
+      color: var(--surface);
     }
 
-    .brand-icon {
-      width: 48px;
-      height: 48px;
+    .brand-logo {
+      width: 52px;
+      height: 52px;
+      border-radius: 18px;
       display: grid;
       place-items: center;
-      border-radius: 16px;
-      background: rgba(255, 255, 255, 0.18);
-      box-shadow: inset 0 12px 20px rgba(0, 0, 0, 0.08);
-      font-size: 1.4rem;
+      background: linear-gradient(135deg, rgba(255, 186, 126, 0.28), rgba(126, 77, 255, 0.22));
+      position: relative;
+      overflow: hidden;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 16px 32px rgba(38, 16, 72, 0.32);
+    }
+
+    .brand-logo::after {
+      content: "";
+      position: absolute;
+      inset: -40% -20% auto auto;
+      width: 120%;
+      height: 120%;
+      background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.6), transparent 60%);
+      mix-blend-mode: screen;
+    }
+
+    .brand-logo svg {
+      width: 44px;
+      height: 44px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .brand-word {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+
+    .brand-word span:first-child {
+      font-size: clamp(1.35rem, 2.8vw, 1.7rem);
+      letter-spacing: -0.4px;
+      background: linear-gradient(135deg, #ffffff, rgba(255, 220, 255, 0.86));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .brand-word span:last-child {
+      font-size: 0.68rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      opacity: 0.74;
     }
 
     header nav {
@@ -483,9 +524,24 @@
 <body>
   <div class="page">
     <header>
-      <div class="brand">
-        <div class="brand-icon">⤓</div>
-        Fexto
+      <div class="brand" aria-label="Fexto">
+        <div class="brand-logo" aria-hidden="true">
+          <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" focusable="false">
+            <defs>
+              <linearGradient id="fexto-mark" x1="12%" y1="16%" x2="88%" y2="88%">
+                <stop offset="0%" stop-color="#ffbc5b" />
+                <stop offset="55%" stop-color="#ff5ab7" />
+                <stop offset="100%" stop-color="#7e4dff" />
+              </linearGradient>
+            </defs>
+            <rect x="4" y="4" width="40" height="40" rx="14" fill="url(#fexto-mark)" />
+            <path d="M17 15h16c1.1 0 2 .9 2 2v2.8c0 1.1-.9 2-2 2h-9.4l-1.1 2.8H31c1.1 0 2 .9 2 2v2.4c0 1.1-.9 2-2 2h-7.2l-1.4 3.6c-.3.7-1 1.2-1.8 1.2h-2.6c-1.4 0-2.4-1.4-1.9-2.7l2.5-6.4H17c-1.1 0-2-.9-2-2v-2.4c0-1.1.9-2 2-2h3.8l1.1-2.8H17c-1.1 0-2-.9-2-2V17c0-1.1.9-2 2-2z" fill="#ffffff" fill-opacity="0.94" />
+          </svg>
+        </div>
+        <div class="brand-word">
+          <span>Fexto</span>
+          <span>Video Lab</span>
+        </div>
       </div>
       <nav>
         <a href="#how">How it works</a>

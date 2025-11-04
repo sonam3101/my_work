@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VidSave – Instagram Video Downloader</title>
+  <title>Fexto – Social Video Downloader</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -12,7 +12,7 @@
       --primary: #ff5ab7;
       --primary-dark: #e647a0;
       --secondary: #7e4dff;
-      --accent: #ff8a65;
+      --accent: #ffbc5b;
       --surface: #ffffff;
       --surface-muted: rgba(255, 255, 255, 0.7);
       --surface-deep: rgba(255, 255, 255, 0.95);
@@ -52,6 +52,8 @@
       align-items: center;
       padding: 2.5rem 0 1.75rem;
       color: var(--surface);
+      flex-wrap: wrap;
+      gap: 1rem;
     }
 
     .brand {
@@ -149,6 +151,40 @@
       gap: 1.2rem;
     }
 
+    .platform-switch {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 0.6rem;
+      padding: 0.4rem;
+      border-radius: 999px;
+      background: rgba(126, 77, 255, 0.08);
+    }
+
+    .platform-tab {
+      border: none;
+      border-radius: 999px;
+      padding: 0.6rem 0.8rem;
+      font-size: 0.92rem;
+      font-weight: 600;
+      background: transparent;
+      color: var(--secondary);
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    }
+
+    .platform-tab:hover,
+    .platform-tab:focus {
+      outline: none;
+      background: rgba(126, 77, 255, 0.15);
+    }
+
+    .platform-tab.active {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      transform: translateY(-1px);
+      box-shadow: 0 12px 20px rgba(126, 77, 255, 0.25);
+    }
+
     .input-label {
       font-weight: 600;
       color: var(--text-strong);
@@ -228,6 +264,49 @@
       gap: 1rem;
     }
 
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      padding: 0.45rem 1rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.24);
+      color: var(--secondary);
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      margin-bottom: 1rem;
+    }
+
+    .hero-stats {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: clamp(1.2rem, 5vw, 3rem);
+      color: var(--surface);
+      font-weight: 600;
+    }
+
+    .hero-stats > div {
+      display: grid;
+      gap: 0.4rem;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
+
+    .hero-stats dt {
+      margin: 0;
+      font-size: clamp(1.4rem, 3vw, 1.8rem);
+      color: white;
+    }
+
+    .hero-stats dd {
+      margin: 0;
+      font-size: 0.78rem;
+      color: rgba(255, 255, 255, 0.85);
+    }
+
     .result-link {
       word-break: break-all;
       font-weight: 600;
@@ -294,10 +373,54 @@
       color: var(--secondary);
     }
 
+    .step-card h3 {
+      margin: 0;
+      font-size: 1.05rem;
+      color: var(--text-strong);
+    }
+
     .step-card p {
       margin: 0;
       color: var(--text-body);
       line-height: 1.6;
+    }
+
+    .platforms {
+      background: rgba(255, 255, 255, 0.94);
+      border-radius: var(--radius-lg);
+      padding: clamp(2.2rem, 5vw, 3.2rem);
+      box-shadow: 0 18px 40px rgba(67, 19, 110, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.65);
+    }
+
+    .platforms-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .platform-card {
+      background: rgba(255, 255, 255, 0.82);
+      border-radius: var(--radius-md);
+      padding: 1.6rem;
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      display: grid;
+      gap: 0.7rem;
+    }
+
+    .platform-card h3 {
+      margin: 0;
+      color: var(--text-strong);
+    }
+
+    .platform-card p {
+      margin: 0;
+      color: var(--text-body);
+      line-height: 1.6;
+    }
+
+    .platform-icon {
+      font-size: 1.5rem;
     }
 
     .faq-grid {
@@ -343,8 +466,16 @@
         padding: 2.2rem;
       }
 
+      .platform-switch {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
       .result-card {
         padding: 1.3rem;
+      }
+
+      .hero-stats {
+        gap: 1.2rem;
       }
     }
   </style>
@@ -354,12 +485,12 @@
     <header>
       <div class="brand">
         <div class="brand-icon">⤓</div>
-        VidSave
+        Fexto
       </div>
       <nav>
         <a href="#how">How it works</a>
+        <a href="#platforms">Platforms</a>
         <a href="#faq">FAQ</a>
-        <a href="https://www.instagram.com/" rel="noopener" target="_blank">Open Instagram</a>
       </nav>
     </header>
 
@@ -367,16 +498,24 @@
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero-content">
           <div class="hero-title">
-            <h1 id="hero-title">Download Instagram videos instantly</h1>
-            <p>Paste any Instagram video, Reel, or IGTV link and VidSave will prepare a download-ready link for you. No installations, no backend server—just copy, open, and save.</p>
+            <div class="hero-pill">Instagram · YouTube · TikTok · Facebook · Twitter</div>
+            <h1 id="hero-title">Download videos from anywhere</h1>
+            <p>Paste your link, choose the platform, and Fexto will route you to a trusted open-source mirror ready for fast downloads. No logins, no installers—just instant saves for the socials you love.</p>
           </div>
 
           <div class="download-card" role="form" aria-labelledby="download-label">
+            <div class="platform-switch" role="tablist" aria-label="Select a platform">
+              <button type="button" class="platform-tab active" data-platform="instagram" role="tab" aria-selected="true">Instagram</button>
+              <button type="button" class="platform-tab" data-platform="youtube" role="tab" aria-selected="false">YouTube</button>
+              <button type="button" class="platform-tab" data-platform="tiktok" role="tab" aria-selected="false">TikTok</button>
+              <button type="button" class="platform-tab" data-platform="facebook" role="tab" aria-selected="false">Facebook</button>
+              <button type="button" class="platform-tab" data-platform="twitter" role="tab" aria-selected="false">Twitter</button>
+            </div>
             <div class="input-group">
-              <span class="input-label" id="download-label">Instagram link</span>
+              <span class="input-label" id="download-label">Paste the link</span>
               <div class="input-row">
                 <input id="video-url" name="url" type="url" placeholder="https://www.instagram.com/reel/..." autocomplete="off" required />
-                <button class="primary-action" id="download-btn" type="button">Get download link</button>
+                <button class="primary-action" id="download-btn" type="button">Generate link</button>
               </div>
             </div>
             <p class="status" id="status" role="status" aria-live="polite"></p>
@@ -388,25 +527,73 @@
               <button class="copy-button" id="copy-btn" type="button">Copy link</button>
               <p class="status" id="copy-status"></p>
             </div>
-            <p class="status" id="tip">Tip: the link opens ddinstagram.com where you can download in HD. Works for public posts, reels, and IGTV.</p>
+            <p class="status" id="tip">Tip: we open ddinstagram.com where you can grab the video in HD. Works for public posts, Reels, and carousels.</p>
           </div>
+          <dl class="hero-stats">
+            <div>
+              <dt>5+</dt>
+              <dd>platform mirrors</dd>
+            </div>
+            <div>
+              <dt>Instant</dt>
+              <dd>browser-only flow</dd>
+            </div>
+            <div>
+              <dt>HD</dt>
+              <dd>download quality</dd>
+            </div>
+          </dl>
         </div>
       </section>
 
       <section id="how" class="steps" aria-labelledby="how-title">
-        <h2 class="section-title" id="how-title">How VidSave works</h2>
+        <h2 class="section-title" id="how-title">How Fexto works</h2>
         <div class="steps-grid">
           <article class="step-card">
             <div class="step-number">1</div>
-            <p>Copy the URL of the Instagram video, Reel, or IGTV you want to save from the share menu.</p>
+            <h3>Copy the share link</h3>
+            <p>Grab the URL from Instagram, YouTube, TikTok, Facebook, Twitter, or another supported network using the native share button.</p>
           </article>
           <article class="step-card">
             <div class="step-number">2</div>
-            <p>Paste the link above and click <strong>Get download link</strong>. VidSave transforms it into a ddinstagram link automatically.</p>
+            <h3>Select the platform</h3>
+            <p>Choose the service above and hit <strong>Generate link</strong>. Fexto rewrites the URL to a fast mirror powered by open-source downloader libraries.</p>
           </article>
           <article class="step-card">
             <div class="step-number">3</div>
-            <p>Open the generated link in a new tab to play or download the video directly to your device.</p>
+            <h3>Download instantly</h3>
+            <p>Open the generated tab to preview, save the HD file, or copy the final download address for sharing.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="platforms" class="platforms" aria-labelledby="platforms-title">
+        <h2 class="section-title" id="platforms-title">Supported platforms</h2>
+        <div class="platforms-grid">
+          <article class="platform-card">
+            <div class="platform-icon">📸</div>
+            <h3>Instagram</h3>
+            <p>Transforms links to <strong>ddinstagram</strong> so you can download Reels, stories, and carousel videos in one tap.</p>
+          </article>
+          <article class="platform-card">
+            <div class="platform-icon">▶️</div>
+            <h3>YouTube</h3>
+            <p>Uses the privacy-friendly <strong>Piped</strong> frontend to expose the original streams with multiple quality options.</p>
+          </article>
+          <article class="platform-card">
+            <div class="platform-icon">🎵</div>
+            <h3>TikTok</h3>
+            <p>Redirects to <strong>VX TikTok</strong>, a lightweight mirror that serves watermark-free downloads instantly.</p>
+          </article>
+          <article class="platform-card">
+            <div class="platform-icon">📘</div>
+            <h3>Facebook</h3>
+            <p>Launches <strong>SnapSave</strong> with your link queued, keeping the downloader just one click away.</p>
+          </article>
+          <article class="platform-card">
+            <div class="platform-icon">🐦</div>
+            <h3>Twitter &amp; X</h3>
+            <p>Rewrites to <strong>VX Twitter</strong> to play and download clips from tweets without leaving your browser.</p>
           </article>
         </div>
       </section>
@@ -416,26 +603,30 @@
         <div class="faq-grid">
           <article class="faq-item">
             <h3>Do I need to install an app or extension?</h3>
-            <p>No. VidSave works entirely in your browser—there is no backend server or installation required.</p>
+            <p>No. Fexto works entirely in your browser—there is no backend server or installation required.</p>
           </article>
           <article class="faq-item">
-            <h3>What types of Instagram links are supported?</h3>
-            <p>Any public Instagram post, Reel, or IGTV link that contains <code>instagram.com</code> or <code>instagr.am</code> can be converted into a download link.</p>
+            <h3>What platforms are supported?</h3>
+            <p>Instagram, YouTube, TikTok, Facebook, and Twitter are fully supported, including formats like Reels, Shorts, Stories, and carousels as long as the post is public.</p>
           </article>
           <article class="faq-item">
-            <h3>Why am I redirected to ddinstagram.com?</h3>
-            <p>ddinstagram hosts a lightweight download page for the media. VidSave simply rewrites your link so you can download the video in one tap.</p>
+            <h3>Why am I redirected to other domains?</h3>
+            <p>Fexto uses trusted, open-source mirrors such as ddinstagram, Piped, VX TikTok, SnapSave, and VX Twitter to expose the original video files for download.</p>
           </article>
           <article class="faq-item">
             <h3>Can I save private videos?</h3>
             <p>No. You must have access to the content, and the link must be viewable without logging into the account of the person who posted it.</p>
+          </article>
+          <article class="faq-item">
+            <h3>What about HD quality?</h3>
+            <p>The mirrors Fexto opens provide the original stream qualities. Pick the resolution that fits your device—1080p for Instagram carousels, 4K for YouTube, and more.</p>
           </article>
         </div>
       </section>
     </main>
 
     <footer>
-      Built with love for Instagram fans. VidSave converts your links locally—remember to respect creators' rights when sharing downloads.
+      Built with love for creators and collectors. Fexto converts your links locally—always credit the original artists when sharing downloads.
     </footer>
   </div>
 
@@ -448,6 +639,152 @@
       const resultLink = document.getElementById('result-link');
       const copyBtn = document.getElementById('copy-btn');
       const copyStatus = document.getElementById('copy-status');
+      const platformTabs = Array.from(document.querySelectorAll('.platform-tab'));
+      const tipEl = document.getElementById('tip');
+      let activePlatform = 'instagram';
+
+      const platformConfig = {
+        instagram: {
+          name: 'Instagram',
+          placeholder: 'https://www.instagram.com/reel/...',
+          tip: 'Tip: we open ddinstagram.com where you can grab the video in HD. Works for public posts, Reels, and carousels.',
+          normalize(url) {
+            if (!url) throw new Error('Please paste an Instagram link.');
+            let parsed;
+            try {
+              parsed = new URL(url.trim());
+            } catch (error) {
+              throw new Error('That does not look like a valid URL.');
+            }
+            const host = parsed.hostname.toLowerCase();
+            const isInstagram = host.includes('instagram.com') || host.includes('instagr.am');
+            if (!isInstagram) {
+              throw new Error('Only Instagram links are supported in this mode.');
+            }
+            parsed.protocol = 'https:';
+            parsed.hostname = 'ddinstagram.com';
+            parsed.searchParams.delete('__a');
+            parsed.searchParams.delete('__d');
+            return parsed.toString();
+          },
+        },
+        youtube: {
+          name: 'YouTube',
+          placeholder: 'https://www.youtube.com/watch?v=...',
+          tip: 'Tip: we redirect to Piped, an open-source frontend that exposes multiple download formats for YouTube videos and Shorts.',
+          normalize(url) {
+            if (!url) throw new Error('Please paste a YouTube link.');
+            let parsed;
+            try {
+              parsed = new URL(url.trim());
+            } catch (error) {
+              throw new Error('That does not look like a valid URL.');
+            }
+            const host = parsed.hostname.toLowerCase();
+            const isYouTube = host.includes('youtube.com') || host.includes('youtu.be');
+            if (!isYouTube) {
+              throw new Error('Only YouTube links are supported in this mode.');
+            }
+            let videoId = parsed.searchParams.get('v');
+            if (!videoId && host.includes('youtu.be')) {
+              videoId = parsed.pathname.replace('/', '');
+            }
+            if (!videoId) {
+              const match = parsed.pathname.match(/\/shorts\/([\w-]+)/);
+              if (match) {
+                videoId = match[1];
+              }
+            }
+            if (!videoId) {
+              throw new Error('Please provide a standard YouTube watch, share, or Shorts link.');
+            }
+            return `https://piped.video/watch?v=${videoId}`;
+          },
+        },
+        tiktok: {
+          name: 'TikTok',
+          placeholder: 'https://www.tiktok.com/@user/video/...',
+          tip: 'Tip: we swap to VX TikTok for watermark-free downloads. Works for public videos and carousels.',
+          normalize(url) {
+            if (!url) throw new Error('Please paste a TikTok link.');
+            let parsed;
+            try {
+              parsed = new URL(url.trim());
+            } catch (error) {
+              throw new Error('That does not look like a valid URL.');
+            }
+            const host = parsed.hostname.toLowerCase();
+            const isTikTok = host.includes('tiktok.com');
+            if (!isTikTok) {
+              throw new Error('Only TikTok links are supported in this mode.');
+            }
+            parsed.protocol = 'https:';
+            parsed.hostname = 'vxtiktok.com';
+            return parsed.toString();
+          },
+        },
+        facebook: {
+          name: 'Facebook',
+          placeholder: 'https://www.facebook.com/...',
+          tip: 'Tip: we prefill SnapSave so you can export Facebook videos without extra steps.',
+          normalize(url) {
+            if (!url) throw new Error('Please paste a Facebook link.');
+            let parsed;
+            try {
+              parsed = new URL(url.trim());
+            } catch (error) {
+              throw new Error('That does not look like a valid URL.');
+            }
+            const host = parsed.hostname.toLowerCase();
+            const isFacebook = host.includes('facebook.com') || host.includes('fb.watch');
+            if (!isFacebook) {
+              throw new Error('Only Facebook links are supported in this mode.');
+            }
+            const original = parsed.toString();
+            const encoded = encodeURIComponent(original);
+            return `https://snapsave.app/?url=${encoded}`;
+          },
+        },
+        twitter: {
+          name: 'Twitter & X',
+          placeholder: 'https://twitter.com/.../status/...',
+          tip: 'Tip: we rehost to VX Twitter so you can save clips from Tweets in seconds.',
+          normalize(url) {
+            if (!url) throw new Error('Please paste a Twitter or X link.');
+            let parsed;
+            try {
+              parsed = new URL(url.trim());
+            } catch (error) {
+              throw new Error('That does not look like a valid URL.');
+            }
+            const host = parsed.hostname.toLowerCase();
+            const isTwitter = host.includes('twitter.com') || host.includes('x.com');
+            if (!isTwitter) {
+              throw new Error('Only Twitter or X links are supported in this mode.');
+            }
+            parsed.protocol = 'https:';
+            parsed.hostname = 'vxtwitter.com';
+            return parsed.toString();
+          },
+        },
+      };
+
+      function updatePlatformTab(target) {
+        platformTabs.forEach((tab) => {
+          const isActive = tab === target;
+          tab.classList.toggle('active', isActive);
+          tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        });
+        const platformKey = target.dataset.platform;
+        activePlatform = platformKey;
+        const config = platformConfig[platformKey];
+        urlInput.placeholder = config.placeholder;
+        tipEl.textContent = config.tip;
+        resultCard.hidden = true;
+        copyStatus.textContent = '';
+        copyStatus.classList.remove('success', 'error');
+        statusEl.textContent = '';
+      }
 
       function setStatus(message, type) {
         statusEl.textContent = message;
@@ -457,35 +794,12 @@
         }
       }
 
-      function normalizeInstagramUrl(rawUrl) {
-        if (!rawUrl) {
-          throw new Error('Please paste an Instagram link.');
-        }
-        let parsed;
-        try {
-          parsed = new URL(rawUrl.trim());
-        } catch (error) {
-          throw new Error('That does not look like a valid URL.');
-        }
-
-        const host = parsed.hostname.toLowerCase();
-        const isInstagram = host.includes('instagram.com') || host.includes('instagr.am');
-        if (!isInstagram) {
-          throw new Error('Only Instagram links are supported.');
-        }
-
-        parsed.protocol = 'https:';
-        parsed.hostname = 'ddinstagram.com';
-        parsed.searchParams.delete('__a');
-        parsed.searchParams.delete('__d');
-        return parsed.toString();
-      }
-
       function showResult(url) {
         resultLink.href = url;
         resultLink.textContent = url;
         resultCard.hidden = false;
         copyStatus.textContent = '';
+        copyStatus.classList.remove('success', 'error');
       }
 
       async function copyToClipboard(text) {
@@ -501,14 +815,21 @@
         }
       }
 
+      platformTabs.forEach((tab) => {
+        tab.addEventListener('click', () => updatePlatformTab(tab));
+      });
+
       downloadBtn.addEventListener('click', () => {
+        const config = platformConfig[activePlatform];
         try {
-          const transformed = normalizeInstagramUrl(urlInput.value);
+          const transformed = config.normalize(urlInput.value);
           showResult(transformed);
-          setStatus('Link ready! Opening ddinstagram in a new tab.', 'success');
+          setStatus(`${config.name} link ready! Opening in a new tab.`, 'success');
           window.open(transformed, '_blank', 'noopener');
         } catch (error) {
           resultCard.hidden = true;
+          copyStatus.textContent = '';
+          copyStatus.classList.remove('success', 'error');
           setStatus(error.message, 'error');
         }
       });
